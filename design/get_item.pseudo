@@ -9,22 +9,31 @@
 
 START get_item
 
-    # TODO 1: Identify the information the get-item process needs.
-    # Consider the current room, item in that room, and player's inventory.
+    # Information needed
+    # current_room, room_item (item in current_room, if any) and inventory
 
-    # TODO 2: Prompt for and receive the player's get-item command.
+    Prompt and receive get-item command
 
-    # TODO 3: Validate whether the requested item is available in the current
-    # room. Show the decision clearly.
+    OUTPUT "Enter your command:"
+    INPUT command_text
+    PARSE command_text INTO action AND requested_item
 
-    # TODO 4: Describe what happens when the item request is valid.
-    # Include the inventory update and player output.
+    Validate whether the requested_item is in current_room
+    IF action IS "get" AND requested_item IS room_item AND room_item IS NOT empty THEN
 
-    # TODO 5: Describe what happens when the item request is invalid.
-    # Include the output the player should receive.
+    # Valid item request
+        ADD requested_item TO inventory
+        SET room_item TO empty
+        OUTPUT requested_item + "retrieved!" 
+    ELSE
 
-    # TODO 6: Show how the process returns to or continues the larger gameplay
-    # loop after the command is handled.
+    # Invalid item request
+        OUTPUT "Can't get the " + requested_item + "!"
+    END IF
+
+    # Return to or continue the main game loop
+    OUTPUT "Current inventory: " + inventory
+    # Control returns to main WHILE loop for next player command
 
 END get_item
 

@@ -7,19 +7,45 @@
 # Write pseudocode, not Python code. Use clear indentation and course-appropriate
 # keywords such as INPUT, OUTPUT, IF, ELSE, WHILE, SET, or similar terms.
 
-# TODO 1: Identify the information the movement process needs.
-# Consider the player's current room and movement command.
+ SET current_room TO 'Mousehole'
+ SET inventory TO empty list
+  SET game_over TO FALSE
 
-# TODO 2: Prompt for and receive the player's movement command.
+ WHILE game_over IS FALSE
+    OUTPUT current_room
+    OUTPUT available directions / room details
+    INPUT command_text
 
-# TODO 3: Validate whether the requested movement is possible from the
-# current room. Show the decision clearly.
+# Movement command
+(expected format: "go North","go South","go East","go West")
+    SPLIT command_text INTO words
+    IF length of words is 2 AND words[0] IS "go" THEN
+        SET direction TO formatted words[1] (e.g., "North", "South", "East", "West")
 
-# TODO 4: Describe what happens when the movement command is valid.
-# Include the room update and player output.
+        IF direction is A VALID EXIT FROM current_room THEN
+            SET current_room TO room connected to current_room in direction
+                OUTPUT "You move" + direction + "to the" + current_room + "."
 
-# TODO 5: Describe what happens when the movement command is invalid.
-# Include the output the player should receive.
+                # Check ending conditions
+                IF current_room IS "Sunroom" THEN
+                    IF inventory has all 6 distraction items THEN 
+                        OUTPUT "You distract Mr.Kitty and escape outside!"
+                            SET game_over TO TRUE
+                        ELSE 
+                            OUTPUT "Mr.Kitty spots you before you have all six items! Game over."
+                            SET game_over TO TRUE
+                        END IF
+                    END IF
+                ELSE
+                    OUTPUT "You can't go that way!"
+                END IF 
+            ELSE
+                OUTPUT "Invalid Input! Use commands like 'go North', 'go South', 'go East', 'go West'."
+            END IF
+        END WHILE 
 
-# TODO 6: Show how movement fits into repeated gameplay.
-# The final game continues accepting commands until a required ending occurs.
+
+
+
+
+
